@@ -21,27 +21,26 @@ use App\Http\Controllers\Api\OrderController;
 
 Route::post('/register', [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login']);
+Route::get('/products', [ProductController::class, 'index']);
+Route::get('/products/{product}', [ProductController::class, 'show']);
 
-Route::middleware('auth:api')->group(function () {
+Route::middleware(['auth:api'])->group(function () {
 
-    // Profile
     Route::get('/profile', [UserController::class, 'profile']);
 
-    // ==== PRODUCTS ====
-    Route::get('/products', [ProductController::class, 'index']);
-    Route::post('/products', [ProductController::class, 'store']);       
-    Route::put('/products/{product}', [ProductController::class, 'update']);
-    Route::delete('/products/{product}', [ProductController::class, 'destroy']); 
-
-    // ==== CART ====
+    // Hanya admin yang bisa kelola produk
+    Route::middleware('admin.only')->group(function () {
+        Route::post('/products', [ProductController::class, 'store']);
+        Route::put('/products/{product}', [ProductController::class, 'update']);
+        Route::delete('/products/{product}', [ProductController::class, 'destroy']);
+    });
+    
+    // Semua user yang login bisa akses ini
+    Route::get('/orders', [OrderController::class, 'index']);
     Route::get('/cart', [CartController::class, 'index']);
     Route::post('/cart/add', [CartController::class, 'add']);
     Route::post('/cart/remove', [CartController::class, 'remove']);
-
-    // ==== CHECKOUT ====
     Route::post('/cart/checkout', [CheckoutController::class, 'checkout']);
 
-    // ==== ORDERS ====
-    Route::get('/orders', [OrderController::class, 'index']);
     Route::get('/orders/{id}', [OrderController::class, 'show']);
 });

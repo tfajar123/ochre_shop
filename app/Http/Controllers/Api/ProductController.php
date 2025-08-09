@@ -21,6 +21,11 @@ class ProductController extends Controller
         return response()->json($query->get());
     }
 
+    public function show(Product $product)
+    {
+        return response()->json($product);
+    }
+
     public function store(Request $request)
     {
         $this->authorize('admin-only');
