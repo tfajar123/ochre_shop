@@ -32,4 +32,9 @@ class OrderController extends Controller
         return response()->json($order);
     }
 
+    public function showAll()
+    {
+        $orders = Order::with('user', 'orderItems.product')->latest()->get();
+        return response()->json($orders);
+    }
 }

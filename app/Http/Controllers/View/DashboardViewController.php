@@ -77,4 +77,18 @@ class DashboardViewController extends Controller
         $product = $response->json();
         return view('dashboard.edit', compact('product'));
     }
+
+    
+    public function showOrders()
+    {
+        $response = Http::get(env('API_BASE_URL') . '/api/orders-all');
+
+        if ($response->failed()) {
+            abort(500, 'Gagal mengambil data order dari API');
+        }
+
+        $orders = $response->json();
+        
+        return view('dashboard.orders', compact('orders'));
+    }
 }

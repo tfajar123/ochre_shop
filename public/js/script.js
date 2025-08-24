@@ -248,28 +248,69 @@ async function loadCart() {
 
 document.addEventListener("DOMContentLoaded", loadCart);
 
+// Login
+// document
+//     .getElementById("loginForm")
+//     .addEventListener("submit", async function (e) {
+//         e.preventDefault();
+//         let formData = new FormData(this);
+
+//         let res = await fetch("/api/login", {
+//             method: "POST",
+//             body: formData,
+//         });
+
+//         if (res.ok) {
+//             let data = await res.json();
+//             localStorage.setItem("api_token", data.token);
+//             alert("Login berhasil. Selamat datang " + data.user.name);
+//             location.reload();
+//         } else {
+//             let err = await res.json();
+//             alert(err.message || "Login gagal");
+//         }
+//     });
+
 document
     .getElementById("loginForm")
     .addEventListener("submit", async function (e) {
         e.preventDefault();
         let formData = new FormData(this);
 
-        let res = await fetch("/api/login", {
+        let res = await fetch("/login", {
+            method: "POST",
+            headers: {
+                "X-CSRF-TOKEN": document.querySelector(
+                    'meta[name="csrf-token"]'
+                ).content,
+                "X-Requested-With": "XMLHttpRequest",
+                Accept: "application/json",
+            },
+            body: formData,
+        });
+
+        let respond = await fetch("/api/login", {
             method: "POST",
             body: formData,
         });
 
-        if (res.ok) {
-            let data = await res.json();
+        let data = await respond.json();
+
+        if (respond.ok) {
             localStorage.setItem("api_token", data.token);
             alert("Login berhasil. Selamat datang " + data.user.name);
-            location.reload();
+            if (data.user.role === "admin") {
+                window.location.href = "/dashboard";
+            } else {
+                window.location.href = "/";
+            }
         } else {
             let err = await res.json();
             alert(err.message || "Login gagal");
         }
     });
 
+// Register
 document
     .getElementById("registerForm")
     .addEventListener("submit", async function (e) {
@@ -292,6 +333,7 @@ document
         }
     });
 
+// Add to Cart
 document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll(".add-to-cart-form").forEach((form) => {
         form.addEventListener("submit", async function (e) {
@@ -304,6 +346,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             const formData = new FormData(this);
+            console.log(formData);
             const res = await fetch("/api/cart/add", {
                 method: "POST",
                 headers: {

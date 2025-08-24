@@ -93,14 +93,14 @@
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="charts.html">
+                <a class="nav-link" href="{{ route('dashboard.ordersDashboard') }}">
                     <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Charts</span></a>
+                    <span>Orders</span></a>
             </li>
 
             <!-- Nav Item - Tables -->
             <li class="nav-item">
-                <a class="nav-link" href="\dashboard\products">
+                <a class="nav-link" href="{{ route('dashboard.products') }}">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Products</span></a>
             </li>

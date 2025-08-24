@@ -66,7 +66,7 @@
                                     <a href="#" class="dropdown-item fw-light">Single Product</a>
                                 </li>
                                 <li>
-                                    <a href="#" class="dropdown-item fw-light">Blog</a>
+                                    <a href="/orders" class="dropdown-item fw-light">Orders</a>
                                 </li>
                                 <li>
                                     <a href="#" class="dropdown-item fw-light">Single Post</a>
@@ -89,7 +89,17 @@
                                     </svg>
                                 </a>
                             </li>
-                            @include('components.login')           
+                                @include('components.login')
+                            @if (Auth::check())
+                            <li class="pe-3">
+                                <form action="{{ route('logout') }}" method="POST" id="logoutForm">
+                                    @csrf
+                                    <button type="submit" class="btn p-0 border-0 bg-transparent" title="Logout" onclick="localStorage.removeItem('api_token'); ">
+                                        <i class="fa-solid fa-arrow-right-from-bracket" style="color: #000000;"></i>
+                                    </button>
+                                </form>
+                            </li>
+                            @endif
                             <li class="cart-dropdown dropdown" id="cart-dropdown">
                               <!-- tombol dan badge akan diisi JS -->
                               <a id="cart-toggle" class="dropdown-toggle" data-bs-toggle="dropdown" href="#">

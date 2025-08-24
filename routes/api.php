@@ -23,6 +23,7 @@ Route::post('/register', [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login']);
 Route::get('/products', [ProductController::class, 'index']);
 Route::get('/products/{product}', [ProductController::class, 'show']);
+Route::get('/orders-all', [OrderController::class, 'showAll']);
 
 Route::middleware(['auth:api'])->group(function () {
 

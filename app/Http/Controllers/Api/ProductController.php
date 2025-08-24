@@ -35,7 +35,7 @@ class ProductController extends Controller
             'description' => 'nullable|string',
             'price'       => 'required|numeric',
             'stock'       => 'required|integer',
-            'image'       => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            'image'       => 'required|image|mimes:jpeg,png,jpg,webp|max:2048',
         ]);
 
         // Simpan gambar ke folder public/images
@@ -58,7 +58,7 @@ class ProductController extends Controller
             'description' => 'nullable|string',
             'price'       => 'sometimes|numeric',
             'stock'       => 'sometimes|integer',
-            'image'       => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'image'       => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
         ]);
 
         // Jika ada gambar baru

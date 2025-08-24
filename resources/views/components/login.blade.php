@@ -45,6 +45,7 @@
                             <!-- Register -->
                             <div class="tab-pane fade" id="nav-register" role="tabpanel">
                                 <form id="registerForm">
+                                    @csrf
                                     <div class="form-group py-3">
                                         <label class="mb-2">Name *</label>
                                         <input type="text" name="name" placeholder="Your Name"
